@@ -18,8 +18,8 @@ def lambda_handler(event, context):
     if flag=='new':
         time_id=file_datadict['time']
     else:
-        print(file_datadict['batch_id'])
-        string_format=file_datadict['batch_id']
+        print(file_datadict['id'])
+        string_format=file_datadict['id']
         string_format=str(string_format)
         time_id=string_format.split('_')[0]
     
