@@ -12,8 +12,6 @@ config = configparser.ConfigParser()
 class RunDocker:
     
     def __init__(self):
-        
-        
         my_param=client.get_parameters_by_path(
             Path=ssm_path,
             Recursive=False,
@@ -30,7 +28,7 @@ class RunDocker:
                 config_dict = {section_name: config_values}
                 config.read_dict(config_dict) 
     
-    def run_docker_image(self, my_id,my_prefix,my_bucket_name,my_flag):
+    def run_docker_image(self, my_parameters):
         try:
             
             my_task_definition_name = config[ssm_full_path]['my_task_definition_name']
@@ -52,10 +50,6 @@ class RunDocker:
             public_ip = config[ssm_full_path]['public_ip']
             
             print(my_task_definition_name)
-            id=my_id
-            my_prefix=my_prefix
-            bucket_name=my_bucket_name
-            my_flag=my_flag
             response = c.run_task(
             cluster=cluster_name,
             taskDefinition=my_task_definition_name,
@@ -79,7 +73,7 @@ class RunDocker:
                     {
                         'name': container_name,
                         'command': [
-                            "python","textmining/Textmining_pmruser.py",my_id,my_prefix,my_bucket_name,my_flag
+                            "python","some_folder/calc.py",my_parameters
                         ],
                         'environment': [
                     {
